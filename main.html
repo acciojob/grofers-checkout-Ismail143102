@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <title>DOM Level Finder</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    #ans {
+      text-align: center;
+    }
+  </style>
 </head>
-
 <body>
-    <!-- the entire body must be written by student -->
-    <table style="width: 100%">
-    <caption>
-      Monthly savings
-    </caption>
+  <table style="width: 100%">
+    <caption><strong>Monthly savings</strong></caption>
     <tr>
       <th>Item</th>
       <th>Prices in Rs</th>
@@ -37,47 +44,49 @@
       <td class="price">50</td>
     </tr>
   </table>
-    <script type="text/javascript" src="./script.js">
-		// Create button dynamically
-const getSumBtn = document.createElement("button");
-getSumBtn.append("Get Total Price");
-document.body.appendChild(getSumBtn);
 
-const getSum = () => {
-  // Remove old total row if already exists (avoid duplicates)
-  const oldTotal = document.querySelector(".total-row");
-  if (oldTotal) {
-    oldTotal.remove();
-  }
+  <!-- ✅ JavaScript directly inside HTML -->
+  <script>
+    // Create the "Get Total Price" button
+    const getSumBtn = document.createElement("button");
+    getSumBtn.textContent = "Get Total Price";
+    getSumBtn.style.marginTop = "15px";
+    document.body.appendChild(getSumBtn);
 
-  // Select all price cells
-  const priceCells = document.querySelectorAll(".price");
-  let total = 0;
+    // Function to calculate and display total
+    const getSum = () => {
+      // Remove existing total row if it exists
+      const oldTotal = document.querySelector(".total-row");
+      if (oldTotal) {
+        oldTotal.remove();
+      }
 
-  // Sum up all prices
-  priceCells.forEach(cell => {
-    total += parseInt(cell.textContent, 10);
-  });
+      // Select all price cells
+      const priceCells = document.querySelectorAll(".price");
+      let total = 0;
 
-  // Create new row for total
-  const table = document.querySelector("table");
-  const newRow = document.createElement("tr");
-  newRow.classList.add("total-row");
+      // Calculate total
+      priceCells.forEach(cell => {
+        total += parseInt(cell.textContent, 10);
+      });
 
-  const newCell = document.createElement("td");
-  newCell.id = "ans";
-  newCell.setAttribute("colspan", "2");
-  newCell.style.fontWeight = "bold";
-  newCell.textContent = "Total Price: Rs " + total;
+      // Create total row
+      const table = document.querySelector("table");
+      const newRow = document.createElement("tr");
+      newRow.classList.add("total-row");
 
-  newRow.appendChild(newCell);
-  table.appendChild(newRow);
-};
+      const newCell = document.createElement("td");
+      newCell.setAttribute("colspan", "2");
+      newCell.id = "ans";
+      newCell.style.fontWeight = "bold";
+      newCell.textContent = "Total Price: Rs " + total;
 
-// Event listener for button
-getSumBtn.addEventListener("click", getSum);
-</script>
+      newRow.appendChild(newCell);
+      table.appendChild(newRow);
+    };
 
+    // Add event listener to button
+    getSumBtn.addEventListener("click", getSum);
+  </script>
 </body>
-
 </html>
